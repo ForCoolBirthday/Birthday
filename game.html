@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Jeu - Anniversaire</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .game-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .game-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(196, 69, 105, 0.1));
+            padding: 20px 30px;
+            border-radius: 15px;
+            border: 2px solid var(--primary-color);
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .game-area {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.05), rgba(196, 69, 105, 0.05));
+            border: 3px dashed var(--primary-color);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            cursor: crosshair;
+        }
+
+        .candle {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            cursor: pointer;
+            user-select: none;
+            animation: candlePopIn 0.3s ease-out;
+        }
+
+        @keyframes candlePopIn {
+            from {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .candle:hover {
+            filter: brightness(1.2);
+            transform: scale(1.1);
+        }
+
+        .candle-body {
+            width: 30px;
+            height: 50px;
+            background: linear-gradient(90deg, #f4e4c1, #ffe4b5);
+            border-radius: 5px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .candle-flame {
+            width: 20px;
+            height: 30px;
+            background: linear-gradient(to top, #ff6b00, #ffa500, #ffff00, #fff5e6);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            margin: 0 auto;
+            position: relative;
+            top: -15px;
+            box-shadow: 0 0 10px #ffa500, 0 0 20px rgba(255, 165, 0, 0.5);
+            animation: flameFlicker 0.8s infinite;
+        }
+
+        @keyframes flameFlicker {
+            0%, 100% { transform: scaleY(1) translateX(0); }
+            25% { transform: scaleY(1.1) translateX(2px); }
+            50% { transform: scaleY(0.9) translateX(-2px); }
+            75% { transform: scaleY(1.05) translateX(1px); }
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-game {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 157, 0.3);
+        }
+
+        .btn-start:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-message {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 20px;
+            min-height: 30px;
+            color: var(--primary-color);
+        }
+
+        .game-message.success {
+            animation: bounceIn 0.5s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .game-over {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(196, 69, 105, 0.1));
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .game-over h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .final-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin: 20px 0;
+        }
+
+        .game-difficulty {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--primary-color);
+            background: white;
+            color: var(--primary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .difficulty-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .difficulty-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .game-area {
+                height: 400px;
+            }
+
+            .game-header h1 {
+                font-size: 2rem;
+            }
+
+            .stat-box {
+                min-width: 120px;
+                padding: 15px 20px;
+            }
+
+            .stat-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>🎂 Jeu des Bougies 🎂</h1>
+            <p>Clique sur toutes les bougies qui apparaissent avant que le temps s'écoule !</p>
+        </div>
+
+        <div class="game-difficulty">
+            <button class="difficulty-btn active" data-difficulty="facile">Facile (30s)</button>
+            <button class="difficulty-btn" data-difficulty="moyen">Moyen (20s)</button>
+            <button class="difficulty-btn" data-difficulty="difficile">Difficile (10s)</button>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat-box">
+                <div class="stat-label">Score</div>
+                <div class="stat-value" id="score">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Temps</div>
+                <div class="stat-value" id="timer">30</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Bougies</div>
+                <div class="stat-value" id="candlesClicked">0</div>
+            </div>
+        </div>
+
+        <div class="game-area" id="gameArea"></div>
+
+        <div class="game-message" id="gameMessage"></div>
+
+        <div class="game-controls">
+            <button class="btn-game btn-start" id="startBtn">🚀 Commencer le jeu</button>
+            <a href="index.html" class="btn-game btn-back">← Retour à l'accueil</a>
+        </div>
+
+        <div id="gameOverContainer"></div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

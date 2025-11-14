@@ -178,60 +178,6 @@ section h2::after {
     border-radius: 2px;
 }
 
-/* Gallery Section */
-.gallery-section {
-    background: white;
-    padding: 50px;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-}
-
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-}
-
-.gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.gallery-item:hover {
-    transform: scale(1.05) rotate(1deg);
-}
-
-.gallery-placeholder {
-    width: 100%;
-    aspect-ratio: 1;
-    background: linear-gradient(135deg, #ffe5ec, #ffd4e5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 3px dashed var(--primary-color);
-}
-
-.gallery-placeholder:hover {
-    background: linear-gradient(135deg, #ffc4d9, #ffb3d1);
-    border-color: var(--secondary-color);
-}
-
-.gallery-placeholder span {
-    font-size: 3rem;
-    margin-bottom: 10px;
-}
-
-.gallery-placeholder p {
-    font-weight: 600;
-    color: var(--dark-text);
-}
-
 /* Messages Section */
 .messages-section {
     background: white;
@@ -512,5 +458,17 @@ section h2::after {
 
     .detail-item .icon {
         font-size: 2rem;
+    }
+}
+
+/* Animation fadeIn pour les pages */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

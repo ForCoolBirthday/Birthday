@@ -57,7 +57,71 @@ document.getElementById('rsvp-button').addEventListener('click', function() {
     // window.open('https://votre-formulaire-url.com', '_blank');
 });
 
-// ===== Gestion des photos de la galerie =====
+// ===== FONCTIONNALITÉS AMUSANTES =====
+
+// Double-cliquer sur le titre pour surprises
+let clickCount = 0;
+document.querySelector('.main-title').addEventListener('dblclick', function() {
+    createConfetti();
+    createConfetti();
+    this.style.transform = 'rotate(' + (Math.random() * 20 - 10) + 'deg)';
+    setTimeout(() => {
+        this.style.transform = 'rotate(0deg)';
+    }, 500);
+});
+
+// Toucher tous les messages pour débloquer un easter egg
+let messagesTouched = 0;
+const messageCards = document.querySelectorAll('.message-card');
+messageCards.forEach((card, index) => {
+    card.addEventListener('click', function() {
+        messagesTouched++;
+        this.style.transform = 'scale(1.05) rotate(' + (Math.random() * 4 - 2) + 'deg)';
+        
+        if (messagesTouched === messageCards.length) {
+            alert('🎊 Bravo ! Tu as lu tous les messages ! 🎊\n\nTu es officiellement un champion d\'anniversaire ! 🏆');
+            createConfetti();
+            createConfetti();
+        }
+    });
+});
+
+// Clavier secret : Tapez "ANNIVERSAIRE" pour déclencher une surprise
+let secretCode = '';
+document.addEventListener('keydown', (e) => {
+    secretCode += e.key.toUpperCase();
+    if (secretCode.includes('ANNIVERSAIRE')) {
+        alert('🎉 CODE SECRET TROUVÉ ! 🎉\n\nTu as les super pouvoirs ! Joyeux Anniversaire ! 🚀');
+        createConfetti();
+        createConfetti();
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => createConfetti(), i * 300);
+        }
+        secretCode = '';
+    }
+    if (secretCode.length > 20) {
+        secretCode = secretCode.slice(-20);
+    }
+});
+
+// Changer la couleur du site avec un raccourci clavier
+document.addEventListener('keydown', (e) => {
+    if (e.altKey && e.key === 'c') {
+        const colors = [
+            '#ff6b9d',
+            '#667eea',
+            '#f093fb',
+            '#4facfe',
+            '#fa709a',
+            '#30cfd0'
+        ];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        document.documentElement.style.setProperty('--primary-color', randomColor);
+        createConfetti();
+    }
+});
+
+// Gestion des photos de la galerie =====
 document.querySelectorAll('.gallery-placeholder').forEach((item, index) => {
     item.addEventListener('click', function() {
         // Vous pouvez implémenter :
