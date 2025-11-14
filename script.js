@@ -50,12 +50,108 @@ function createConfetti() {
 
 // ===== Bouton RSVP =====
 document.getElementById('rsvp-button').addEventListener('click', function() {
-    // Vous pouvez remplacer ceci par un formulaire ou une intégration de mail
-    alert('Merci de votre intérêt ! 🎉\n\nVous pouvez répondre par email ou utiliser un formulaire personnalisé.');
+    // Animation spectaculaire
+    triggerRSVPAnimation();
     
-    // Alternative : rediriger vers un formulaire Google, Typeform, etc.
-    // window.open('https://votre-formulaire-url.com', '_blank');
+    // Après 2 secondes, afficher le message
+    setTimeout(() => {
+        alert('Merci de votre intérêt ! 🎉\n\nVous pouvez répondre par email ou utiliser un formulaire personnalisé.');
+    }, 2000);
 });
+
+// Animation spectaculaire pour RSVP
+function triggerRSVPAnimation() {
+    const rsvpButton = document.getElementById('rsvp-button');
+    
+    // Ajouter une classe d'animation au bouton
+    rsvpButton.style.transform = 'scale(1.1)';
+    rsvpButton.style.background = 'linear-gradient(135deg, #FFD700, #FFA500)';
+    
+    // Créer des explosions de confettis
+    for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+            createConfetti();
+        }, i * 150);
+    }
+    
+    // Créer des ballons flottants
+    createBalloons();
+    
+    // Animation de pulse du bouton
+    rsvpButton.style.animation = 'none';
+    setTimeout(() => {
+        rsvpButton.style.animation = 'buttonPulse 0.6s ease-out';
+    }, 10);
+    
+    // Revenir à l'état normal après l'animation
+    setTimeout(() => {
+        rsvpButton.style.transform = 'scale(1)';
+        rsvpButton.style.background = '';
+    }, 2000);
+}
+
+// Créer des ballons flottants
+function createBalloons() {
+    const container = document.getElementById('confetti-container');
+    const balloonEmojis = ['🎈', '🎊', '🎉', '✨', '⭐'];
+    
+    for (let i = 0; i < 15; i++) {
+        const balloon = document.createElement('div');
+        balloon.style.position = 'fixed';
+        balloon.style.fontSize = (Math.random() * 30 + 40) + 'px';
+        balloon.style.left = Math.random() * 100 + '%';
+        balloon.style.bottom = '-50px';
+        balloon.style.zIndex = '999';
+        balloon.style.cursor = 'pointer';
+        balloon.style.animation = `floatUp ${Math.random() * 3 + 4}s ease-in-out forwards`;
+        balloon.style.opacity = '1';
+        
+        balloon.textContent = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+        
+        // Rotation aléatoire
+        balloon.style.transform = `rotate(${Math.random() * 360}deg)`;
+        
+        container.appendChild(balloon);
+        
+        // Cliquer sur un ballon le fait exploser
+        balloon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.style.animation = 'popBalloon 0.4s ease-out forwards';
+            createSmallConfetti(parseFloat(this.style.left), parseFloat(this.style.bottom));
+            setTimeout(() => this.remove(), 400);
+        });
+        
+        // Supprimer après animation
+        setTimeout(() => balloon.remove(), parseFloat(window.getComputedStyle(balloon).animationDuration) * 1000);
+    }
+}
+
+// Créer de petits confettis au clic sur ballon
+function createSmallConfetti(x, y) {
+    const container = document.getElementById('confetti-container');
+    const colors = ['#ff6b9d', '#c44569', '#ffa500', '#ff69b4', '#ff1493'];
+    
+    for (let i = 0; i < 20; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = x + '%';
+        confetti.style.top = y + '%';
+        
+        // Animation de dispersion
+        const angle = (i / 20) * Math.PI * 2;
+        const velocity = 200;
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity;
+        
+        confetti.style.setProperty('--tx', tx);
+        confetti.style.setProperty('--ty', ty);
+        confetti.style.animation = 'confetti-burst 1.5s ease-out forwards';
+        
+        container.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 1500);
+    }
+}
 
 // ===== FONCTIONNALITÉS AMUSANTES =====
 

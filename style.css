@@ -472,3 +472,57 @@ section h2::after {
         transform: translateY(0);
     }
 }
+
+/* Animation des ballons flottants */
+@keyframes floatUp {
+    0% {
+        bottom: -50px;
+        opacity: 1;
+        transform: translateX(0) rotate(0deg);
+    }
+    50% {
+        transform: translateX(100px) rotate(180deg);
+    }
+    100% {
+        bottom: 110vh;
+        opacity: 0;
+        transform: translateX(-100px) rotate(360deg);
+    }
+}
+
+/* Animation de pop du ballon */
+@keyframes popBalloon {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* Animation de burst des confettis */
+@keyframes confetti-burst {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx, 0), var(--ty, 0)) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Animation pulse du bouton */
+@keyframes buttonPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

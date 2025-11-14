@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gâteau d'Anniversaire 🎂</title>
+    <title>Gâteau d'Anniversaire Yohann 🎂</title>
     <style>
         * {
             margin: 0;
@@ -113,25 +113,34 @@
         }
 
         .btn-back {
-            margin-top: 40px;
-            padding: 14px 35px;
-            font-size: 1rem;
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            padding: 12px 28px;
+            font-size: 1.1rem;
             font-weight: bold;
-            background: rgba(255, 255, 255, 0.25);
-            color: white;
-            border: 2px solid white;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 245, 247, 0.95));
+            color: #ff6b9d;
+            border: 2px solid #ff6b9d;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
             backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 100;
         }
 
         .btn-back:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: scale(1.08);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-back:active {
+            transform: translateY(-1px);
         }
 
         @media (max-width: 768px) {
@@ -146,12 +155,19 @@
             .cake-svg {
                 max-width: 500px;
             }
+
+            .btn-back {
+                top: 15px;
+                left: 15px;
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="cake-container">
-        <h1 class="cake-title">🎂 Joyeux Anniversaire ! 🎂</h1>
+        <h1 class="cake-title">🎂 Joyeux Anniversaire Yohann ! 🎂</h1>
         <p class="cake-subtitle">✨ Un gâteau délicieux pour une journée inoubliable ✨</p>
 
         <!-- Gâteau simple avec bougies animées -->
