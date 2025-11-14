@@ -40,23 +40,29 @@
         .cake-container {
             position: relative;
             text-align: center;
-            padding: 20px;
+            padding: clamp(15px, 5vw, 40px);
             z-index: 10;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .cake-title {
             color: white;
-            font-size: 3.5rem;
-            margin-bottom: 20px;
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
+            margin-bottom: clamp(15px, 4vw, 30px);
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
             animation: slideDown 0.8s ease-out;
+            word-break: break-word;
+            line-height: 1.2;
         }
 
         .cake-subtitle {
             color: rgba(255, 255, 255, 0.9);
-            font-size: 1.2rem;
-            margin-bottom: 50px;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            margin-bottom: clamp(30px, 8vw, 50px);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            word-break: break-word;
         }
 
         @keyframes slideDown {
@@ -72,7 +78,7 @@
 
         /* Gâteau SVG */
         .cake-svg {
-            max-width: 700px;
+            max-width: clamp(250px, 90vw, 700px);
             width: 100%;
             height: auto;
             filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.4));
@@ -259,9 +265,9 @@
 
         /* Bouton Souffler la bougie */
         .btn-blow {
-            margin-top: 40px;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            margin-top: clamp(30px, 8vw, 40px);
+            padding: clamp(12px 25px, 2vw 4vw, 15px 40px);
+            font-size: clamp(0.95rem, 2.5vw, 1.2rem);
             font-weight: bold;
             background: linear-gradient(135deg, #ff6b9d, #c44569);
             color: white;
@@ -273,6 +279,7 @@
             letter-spacing: 1px;
             box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
             z-index: 10;
+            white-space: nowrap;
         }
 
         .btn-blow:hover:not(:disabled) {
@@ -333,27 +340,71 @@
 
         @media (max-width: 768px) {
             .cake-title {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
 
             .cake-subtitle {
-                font-size: 1rem;
+                font-size: 0.95rem;
+                margin-bottom: clamp(20px, 6vw, 40px);
             }
 
             .cake-svg {
-                max-width: 500px;
+                max-width: 90vw;
             }
 
             .btn-back {
-                top: 15px;
-                left: 15px;
-                padding: 10px 20px;
-                font-size: 1rem;
+                top: clamp(10px, 2vw, 15px);
+                left: clamp(10px, 2vw, 15px);
+                padding: clamp(8px 12px, 1.5vw 2vw, 10px 20px);
+                font-size: 0.95rem;
             }
 
             .btn-blow {
-                padding: 12px 30px;
-                font-size: 1rem;
+                padding: clamp(10px 20px, 2vw 3vw, 12px 30px);
+                font-size: 0.95rem;
+                margin-top: clamp(25px, 6vw, 35px);
+            }
+        }
+
+        /* Optimisations supplémentaires pour très petits écrans */
+        @media (max-width: 480px) {
+            .cake-title {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+
+            .cake-subtitle {
+                font-size: 0.85rem;
+                margin-bottom: clamp(20px, 5vw, 30px);
+                padding: 0 10px;
+            }
+
+            .cake-container {
+                padding: clamp(10px, 3vw, 15px);
+            }
+
+            .cake-svg {
+                max-width: 85vw;
+                margin: 0 auto;
+            }
+
+            .btn-back {
+                top: 8px;
+                left: 8px;
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                border-radius: 15px;
+            }
+
+            .btn-blow {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+                margin-top: 25px;
+                border-radius: 30px;
+            }
+
+            .btn-blow:hover:not(:disabled) {
+                transform: scale(1.05);
             }
         }
     </style>
