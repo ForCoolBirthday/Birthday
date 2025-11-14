@@ -56,8 +56,55 @@ document.getElementById('celebration-button').addEventListener('click', function
     showCelebrationAnimation();
 });
 
-// Animation spectaculaire de célébration plein écran
+// Animation spectaculaire de célébration plein écran RESPONSIVE
 function showCelebrationAnimation() {
+    // Déterminer les tailles en fonction de la largeur de l'écran
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    let cakeFontSize, titleFontSize, subtitleFontSize, messageFontSize, emojiSize, buttonFontSize;
+    let cakeMargin, titleMargin, messageMargin, emojiMargin, contentPadding;
+    
+    if (screenWidth < 480) {
+        // Mobile petit
+        cakeFontSize = '2.5rem';
+        titleFontSize = '1.8rem';
+        subtitleFontSize = '1.5rem';
+        messageFontSize = '0.9rem';
+        emojiSize = '1.5rem';
+        buttonFontSize = '0.9rem';
+        cakeMargin = '15px';
+        titleMargin = '10px 0 0 0';
+        messageMargin = '20px';
+        emojiMargin = '0 8px';
+        contentPadding = '20px';
+    } else if (screenWidth < 768) {
+        // Tablette
+        cakeFontSize = '3.5rem';
+        titleFontSize = '2.5rem';
+        subtitleFontSize = '2rem';
+        messageFontSize = '1.1rem';
+        emojiSize = '2rem';
+        buttonFontSize = '1rem';
+        cakeMargin = '20px';
+        titleMargin = '15px 0 0 0';
+        messageMargin = '30px';
+        emojiMargin = '0 12px';
+        contentPadding = '30px';
+    } else {
+        // Desktop
+        cakeFontSize = '5rem';
+        titleFontSize = '4rem';
+        subtitleFontSize = '3.5rem';
+        messageFontSize = '1.5rem';
+        emojiSize = '2.5rem';
+        buttonFontSize = '1.2rem';
+        cakeMargin = '30px';
+        titleMargin = '0';
+        messageMargin = '40px';
+        emojiMargin = '0 15px';
+        contentPadding = '40px';
+    }
+
     // Créer le container de célébration
     const celebrationContainer = document.createElement('div');
     celebrationContainer.id = 'celebration-overlay';
@@ -76,43 +123,114 @@ function showCelebrationAnimation() {
         align-items: center;
         z-index: 10000;
         overflow: hidden;
+        padding: ${contentPadding};
+        box-sizing: border-box;
     `;
 
-    // Ajouter le contenu de célébration
-    celebrationContainer.innerHTML = `
-        <div style="text-align: center; position: relative; z-index: 100; animation: slideInBig 0.8s ease-out;">
-            <div style="font-size: 5rem; margin-bottom: 30px; animation: bounce 2s ease-in-out infinite;">🎂</div>
-            <h1 style="font-size: 4rem; color: white; margin: 0; text-shadow: 4px 4px 8px rgba(0,0,0,0.3); animation: slideDown 0.8s ease-out;">JOYEUX ANNIVERSAIRE</h1>
-            <h2 style="font-size: 3.5rem; color: white; margin: 20px 0 0 0; text-shadow: 3px 3px 6px rgba(0,0,0,0.3); animation: slideUp 0.8s ease-out 0.2s both;">YOHANN ! �</h2>
-            <p style="font-size: 1.5rem; color: rgba(255,255,255,0.95); margin-top: 40px; max-width: 600px; line-height: 2; animation: fadeIn 1s ease-out 0.5s both;">
-                Que cette journée soit remplie de sourires, de rires et de moments inoubliables ! 💝<br>
-                Tu mérites d'être célébré comme la personne incroyable que tu es ! ✨
-            </p>
-            <div style="margin-top: 50px; animation: pulse 2s ease-in-out infinite;">
-                <span style="font-size: 2.5rem; margin: 0 15px; display: inline-block;">🎊</span>
-                <span style="font-size: 2.5rem; margin: 0 15px; display: inline-block;">🎈</span>
-                <span style="font-size: 2.5rem; margin: 0 15px; display: inline-block;">🎆</span>
-            </div>
-        </div>
-        <button id="close-celebration" style="
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 15px 40px;
-            background: white;
-            color: #ff6b9d;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            z-index: 101;
-            animation: slideUp 0.8s ease-out 0.6s both;
-        ">✨ Fermer la surprise ✨</button>
+    // Créer le contenu avec tailles adaptatives
+    const contentDiv = document.createElement('div');
+    contentDiv.style.cssText = `
+        text-align: center;
+        position: relative;
+        z-index: 100;
+        animation: slideInBig 0.8s ease-out;
+        max-width: 90vw;
+        word-wrap: break-word;
     `;
+
+    // Gâteau
+    const cake = document.createElement('div');
+    cake.style.cssText = `font-size: ${cakeFontSize}; margin-bottom: ${cakeMargin}; animation: bounce 2s ease-in-out infinite;`;
+    cake.textContent = '🎂';
+    contentDiv.appendChild(cake);
+
+    // Titre
+    const title = document.createElement('h1');
+    title.style.cssText = `
+        font-size: ${titleFontSize};
+        color: white;
+        margin: 0;
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.3);
+        animation: slideDown 0.8s ease-out;
+        word-break: break-word;
+        line-height: 1.2;
+    `;
+    title.textContent = 'JOYEUX ANNIVERSAIRE';
+    contentDiv.appendChild(title);
+
+    // Sous-titre
+    const subtitle = document.createElement('h2');
+    subtitle.style.cssText = `
+        font-size: ${subtitleFontSize};
+        color: white;
+        margin: ${titleMargin};
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        animation: slideUp 0.8s ease-out 0.2s both;
+        word-break: break-word;
+    `;
+    subtitle.textContent = 'YOHANN ! 🎉';
+    contentDiv.appendChild(subtitle);
+
+    // Message
+    const message = document.createElement('p');
+    message.style.cssText = `
+        font-size: ${messageFontSize};
+        color: rgba(255,255,255,0.95);
+        margin-top: ${messageMargin};
+        margin-left: auto;
+        margin-right: auto;
+        max-width: min(90vw, 600px);
+        line-height: 1.6;
+        animation: fadeIn 1s ease-out 0.5s both;
+        word-wrap: break-word;
+    `;
+    message.innerHTML = 'Que cette journée soit remplie de sourires, de rires et de moments inoubliables ! 💝<br>Tu mérites d\'être célébré comme la personne incroyable que tu es ! ✨';
+    contentDiv.appendChild(message);
+
+    // Emojis
+    const emojisDiv = document.createElement('div');
+    emojisDiv.style.cssText = `
+        margin-top: ${emojiMargin};
+        animation: pulse 2s ease-in-out infinite;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: ${emojiMargin};
+    `;
+    ['🎊', '🎈', '🎆'].forEach(emoji => {
+        const span = document.createElement('span');
+        span.style.cssText = `font-size: ${emojiSize}; display: inline-block;`;
+        span.textContent = emoji;
+        emojisDiv.appendChild(span);
+    });
+    contentDiv.appendChild(emojisDiv);
+
+    celebrationContainer.appendChild(contentDiv);
+
+    // Bouton de fermeture
+    const closeBtn = document.createElement('button');
+    closeBtn.id = 'close-celebration';
+    closeBtn.style.cssText = `
+        position: fixed;
+        bottom: ${screenWidth < 480 ? '20px' : '40px'};
+        left: 50%;
+        transform: translateX(-50%);
+        padding: ${screenWidth < 480 ? '10px 25px' : '15px 40px'};
+        background: white;
+        color: #ff6b9d;
+        border: none;
+        border-radius: 50px;
+        font-size: ${buttonFontSize};
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+        z-index: 101;
+        animation: slideUp 0.8s ease-out 0.6s both;
+        white-space: nowrap;
+    `;
+    closeBtn.textContent = 'Fermer';
+    celebrationContainer.appendChild(closeBtn);
 
     document.body.appendChild(celebrationContainer);
 
@@ -122,7 +240,7 @@ function showCelebrationAnimation() {
     createFireworks(celebrationContainer);
 
     // Gestionnaire pour fermer l'animation
-    document.getElementById('close-celebration').addEventListener('click', function() {
+    closeBtn.addEventListener('click', function() {
         celebrationContainer.style.animation = 'fadeOut 0.6s ease-out forwards';
         setTimeout(() => celebrationContainer.remove(), 600);
     });
@@ -195,7 +313,7 @@ function createFloatingBalloons(container) {
 
 // Créer des feux d'artifice
 function createFireworks(container) {
-    setInterval(() => {
+    const fireworksInterval = setInterval(() => {
         const x = Math.random() * 100;
         const y = Math.random() * 50 + 20;
         
@@ -220,13 +338,16 @@ function createFireworks(container) {
             const tx = Math.cos(angle) * velocity * 40;
             const ty = Math.sin(angle) * velocity * 40;
             
-            spark.style.animation = `spark-burst 1.5s ease-out forwards`;
+            spark.style.animation = 'spark-burst 1.5s ease-out forwards';
             spark.style.setProperty('--tx', tx + 'px');
             spark.style.setProperty('--ty', ty + 'px');
             
             setTimeout(() => spark.remove(), 1500);
         }
     }, 800);
+
+    // Arrêter les feux d'artifice après 10 secondes
+    setTimeout(() => clearInterval(fireworksInterval), 10000);
 }
 
 // Créer une petite explosion au clic
@@ -252,74 +373,11 @@ function createSmallExplosion(x, y) {
         const tx = Math.cos(angle) * velocity * 50;
         const ty = Math.sin(angle) * velocity * 50;
         
-        particle.style.animation = `spark-burst 1s ease-out forwards`;
+        particle.style.animation = 'spark-burst 1s ease-out forwards';
         particle.style.setProperty('--tx', tx + 'px');
         particle.style.setProperty('--ty', ty + 'px');
         
         setTimeout(() => particle.remove(), 1000);
-    }
-}
-
-// Créer des ballons flottants
-function createBalloons() {
-    const container = document.getElementById('confetti-container');
-    const balloonEmojis = ['🎈', '🎊', '🎉', '✨', '⭐'];
-    
-    for (let i = 0; i < 15; i++) {
-        const balloon = document.createElement('div');
-        balloon.style.position = 'fixed';
-        balloon.style.fontSize = (Math.random() * 30 + 40) + 'px';
-        balloon.style.left = Math.random() * 100 + '%';
-        balloon.style.bottom = '-50px';
-        balloon.style.zIndex = '999';
-        balloon.style.cursor = 'pointer';
-        balloon.style.animation = `floatUp ${Math.random() * 3 + 4}s ease-in-out forwards`;
-        balloon.style.opacity = '1';
-        
-        balloon.textContent = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
-        
-        // Rotation aléatoire
-        balloon.style.transform = `rotate(${Math.random() * 360}deg)`;
-        
-        container.appendChild(balloon);
-        
-        // Cliquer sur un ballon le fait exploser
-        balloon.addEventListener('click', function(e) {
-            e.stopPropagation();
-            this.style.animation = 'popBalloon 0.4s ease-out forwards';
-            createSmallConfetti(parseFloat(this.style.left), parseFloat(this.style.bottom));
-            setTimeout(() => this.remove(), 400);
-        });
-        
-        // Supprimer après animation
-        setTimeout(() => balloon.remove(), parseFloat(window.getComputedStyle(balloon).animationDuration) * 1000);
-    }
-}
-
-// Créer de petits confettis au clic sur ballon
-function createSmallConfetti(x, y) {
-    const container = document.getElementById('confetti-container');
-    const colors = ['#ff6b9d', '#c44569', '#ffa500', '#ff69b4', '#ff1493'];
-    
-    for (let i = 0; i < 20; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.left = x + '%';
-        confetti.style.top = y + '%';
-        
-        // Animation de dispersion
-        const angle = (i / 20) * Math.PI * 2;
-        const velocity = 200;
-        const tx = Math.cos(angle) * velocity;
-        const ty = Math.sin(angle) * velocity;
-        
-        confetti.style.setProperty('--tx', tx);
-        confetti.style.setProperty('--ty', ty);
-        confetti.style.animation = 'confetti-burst 1.5s ease-out forwards';
-        
-        container.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 1500);
     }
 }
 
