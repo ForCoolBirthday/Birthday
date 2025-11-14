@@ -236,11 +236,27 @@
         .difficulty-btn.active {
             background: var(--primary-color);
             color: white;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+            animation: pulseActive 1s ease-in-out infinite;
+        }
+
+        @keyframes pulseActive {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .difficulty-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        .difficulty-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         @media (max-width: 600px) {

@@ -85,32 +85,146 @@
 
         /* Animation des flammes */
         .flame {
-            animation: flameFlicker 0.8s ease-in-out infinite;
             transform-origin: bottom center;
+            animation: flameFlicker 0.8s ease-in-out infinite, flameWave 2.5s ease-in-out infinite;
         }
 
+        /* Animation de scintillement réaliste de la flamme */
         @keyframes flameFlicker {
             0% {
-                opacity: 0.8;
-                transform: scaleY(0.9);
+                opacity: 0.9;
+                transform: scaleY(1) scaleX(0.95) translateY(0);
             }
-            25% {
+            15% {
+                opacity: 0.95;
+                transform: scaleY(1.05) scaleX(1) translateY(-2px);
+            }
+            30% {
+                opacity: 0.85;
+                transform: scaleY(0.98) scaleX(0.97) translateY(1px);
+            }
+            45% {
                 opacity: 1;
-                transform: scaleY(1.15);
+                transform: scaleY(1.02) scaleX(0.98) translateY(-1px);
             }
-            50% {
-                opacity: 0.7;
-                transform: scaleY(0.85);
+            60% {
+                opacity: 0.9;
+                transform: scaleY(1.03) scaleX(1.02) translateY(0);
             }
             75% {
-                opacity: 1;
-                transform: scaleY(1.1);
+                opacity: 0.88;
+                transform: scaleY(0.99) scaleX(0.96) translateY(2px);
+            }
+            90% {
+                opacity: 0.93;
+                transform: scaleY(1.01) scaleX(0.99) translateY(-1px);
             }
             100% {
-                opacity: 0.8;
-                transform: scaleY(0.9);
+                opacity: 0.9;
+                transform: scaleY(1) scaleX(0.95) translateY(0);
             }
         }
+
+        /* Animation de mouvement ondulant de la flamme */
+        @keyframes flameWave {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+            25% {
+                transform: translateX(-1px) translateY(-1px);
+            }
+            50% {
+                transform: translateX(1px) translateY(0);
+            }
+            75% {
+                transform: translateX(-0.5px) translateY(1px);
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+        /* Animation de respiration de la lueur */
+        @keyframes glowPulse {
+            0%, 100% {
+                opacity: 0.5;
+                r: 6px;
+            }
+            50% {
+                opacity: 0.8;
+                r: 8px;
+            }
+        }
+
+        /* Appliquer l'animation de lueur au cercle de glow */
+        .flame circle:first-of-type {
+            animation: glowPulse 1.5s ease-in-out infinite;
+        }
+
+        /* Animations individuelles des couches de flamme */
+        .flame-outer {
+            animation: flameSway 1.2s ease-in-out infinite;
+        }
+
+        .flame-middle {
+            animation: flameSway 1s ease-in-out infinite 0.1s;
+            transform-origin: center;
+        }
+
+        .flame-inner {
+            animation: flameSway 0.8s ease-in-out infinite 0.2s;
+            transform-origin: center;
+        }
+
+        .flame-core {
+            animation: flameBreathe 1.5s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        .flame-glow {
+            animation: glowPulse 1.5s ease-in-out infinite;
+        }
+
+        .flame-highlight {
+            animation: highlightFlash 0.6s ease-in-out infinite 0.3s;
+        }
+
+        /* Animation de balancement de la flamme */
+        @keyframes flameSway {
+            0%, 100% {
+                transform: skewX(0deg);
+            }
+            25% {
+                transform: skewX(-1deg);
+            }
+            50% {
+                transform: skewX(1deg);
+            }
+            75% {
+                transform: skewX(-0.5deg);
+            }
+        }
+
+        /* Animation de respiration du cœur */
+        @keyframes flameBreathe {
+            0%, 100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 0.9;
+            }
+        }
+
+        /* Flash du reflet blanc */
+        @keyframes highlightFlash {
+            0%, 100% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
 
         .btn-back {
             position: fixed;
@@ -143,6 +257,80 @@
             transform: translateY(-1px);
         }
 
+        /* Bouton Souffler la bougie */
+        .btn-blow {
+            margin-top: 40px;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+            z-index: 10;
+        }
+
+        .btn-blow:hover:not(:disabled) {
+            transform: scale(1.08);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.5);
+        }
+
+        .btn-blow:active:not(:disabled) {
+            transform: scale(1.02);
+        }
+
+        .btn-blow:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Animation d'extinction de la flamme */
+        @keyframes blowOut {
+            0% {
+                opacity: 1;
+                transform: scaleY(1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scaleY(0.5) translateX(5px);
+            }
+            100% {
+                opacity: 0;
+                transform: scaleY(0) translateX(10px);
+            }
+        }
+
+        /* Flamme éteinte */
+        .flame.extinguished {
+            animation: blowOut 1s ease-out forwards !important;
+        }
+
+        /* Confettis d'extinction */
+        .confetti-blow {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            pointer-events: none;
+            z-index: 999;
+            animation: confetti-blow-fall 3s ease-in forwards;
+        }
+
+        @keyframes confetti-blow-fall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(300px) translateX(var(--tx, 0)) rotate(720deg);
+            }
+        }
+
         @media (max-width: 768px) {
             .cake-title {
                 font-size: 2.5rem;
@@ -162,6 +350,11 @@
                 padding: 10px 20px;
                 font-size: 1rem;
             }
+
+            .btn-blow {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -170,135 +363,146 @@
         <h1 class="cake-title">🎂 Joyeux Anniversaire Yohann ! 🎂</h1>
         <p class="cake-subtitle">✨ Un gâteau délicieux pour une journée inoubliable ✨</p>
 
-        <!-- Gâteau simple avec bougies animées -->
-        <svg class="cake-svg" viewBox="0 0 600 650" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <!-- Gradient pour le glaçage -->
-                <linearGradient id="glazeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:#FF85C1;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#FF1493;stop-opacity:1" />
-                </linearGradient>
-                <!-- Gradient pour le gâteau -->
-                <linearGradient id="cakeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:#A0522D;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#654321;stop-opacity:1" />
-                </linearGradient>
-            </defs>
-
-            <!-- Assiette avec ombre -->
-            <ellipse cx="300" cy="590" rx="220" ry="60" fill="#E8D700" stroke="#C4AF00" stroke-width="2"/>
-            <ellipse cx="300" cy="585" rx="210" ry="55" fill="#FFE93B" stroke="none"/>
-            <!-- Reflet sur l'assiette -->
-            <ellipse cx="300" cy="570" rx="200" ry="20" fill="#FFFACD" opacity="0.6"/>
-
-            <!-- PREMIER ÉTAGE (BASE) -->
-            <ellipse cx="300" cy="510" rx="160" ry="45" fill="url(#cakeGradient)" stroke="#3D2817" stroke-width="3"/>
-            <polygon points="140,510 140,450 460,450 460,510" fill="#8B5A3C" stroke="#3D2817" stroke-width="2"/>
-            <ellipse cx="300" cy="450" rx="160" ry="15" fill="#A0522D" stroke="#3D2817" stroke-width="2"/>
-
-            <!-- Glaçage premier étage avec texture -->
-            <path d="M 140 450 Q 160 420 180 450 Q 200 420 220 450 Q 240 420 260 450 Q 280 420 300 450 Q 320 420 340 450 Q 360 420 380 450 Q 400 420 420 450 Q 440 420 460 450" 
-                  fill="url(#glazeGradient)" stroke="#FF1493" stroke-width="2" stroke-linecap="round"/>
-
-            <!-- Gouttes de glaçage -->
-            <circle cx="150" cy="465" r="6" fill="#FF69B4" opacity="0.8"/>
-            <circle cx="220" cy="470" r="5" fill="#FF69B4" opacity="0.7"/>
-            <circle cx="310" cy="472" r="6" fill="#FF69B4" opacity="0.8"/>
-            <circle cx="400" cy="468" r="5" fill="#FF69B4" opacity="0.7"/>
-            <circle cx="470" cy="464" r="6" fill="#FF69B4" opacity="0.8"/>
-
-            <!-- DEUXIÈME ÉTAGE -->
-            <ellipse cx="300" cy="400" rx="120" ry="40" fill="url(#cakeGradient)" stroke="#3D2817" stroke-width="3"/>
-            <polygon points="180,400 180,350 420,350 420,400" fill="#8B5A3C" stroke="#3D2817" stroke-width="2"/>
-            <ellipse cx="300" cy="350" rx="120" ry="12" fill="#A0522D" stroke="#3D2817" stroke-width="2"/>
-
-            <!-- Glaçage deuxième étage -->
-            <path d="M 180 350 Q 200 325 220 350 Q 240 325 260 350 Q 280 325 300 350 Q 320 325 340 350 Q 360 325 380 350 Q 400 325 420 350" 
-                  fill="url(#glazeGradient)" stroke="#FF1493" stroke-width="2" stroke-linecap="round"/>
-
-            <!-- Gouttes de glaçage étage 2 -->
-            <circle cx="190" cy="362" r="5" fill="#FF69B4" opacity="0.7"/>
-            <circle cx="310" cy="365" r="5" fill="#FF69B4" opacity="0.8"/>
-            <circle cx="430" cy="360" r="5" fill="#FF69B4" opacity="0.7"/>
-
-            <!-- TROISIÈME ÉTAGE (SOMMET) -->
-            <ellipse cx="300" cy="310" rx="80" ry="35" fill="url(#cakeGradient)" stroke="#3D2817" stroke-width="3"/>
-            <polygon points="220,310 220,270 380,270 380,310" fill="#8B5A3C" stroke="#3D2817" stroke-width="2"/>
-            <ellipse cx="300" cy="270" rx="80" ry="10" fill="#A0522D" stroke="#3D2817" stroke-width="2"/>
-
-            <!-- Glaçage du sommet -->
-            <path d="M 220 270 Q 240 250 260 270 Q 280 250 300 270 Q 320 250 340 270 Q 360 250 380 270" 
-                  fill="url(#glazeGradient)" stroke="#FF1493" stroke-width="2" stroke-linecap="round"/>
-
-            <!-- Gouttes de glaçage sommet -->
-            <circle cx="240" cy="278" r="4" fill="#FF69B4" opacity="0.7"/>
-            <circle cx="360" cy="280" r="4" fill="#FF69B4" opacity="0.7"/>
-
-            <!-- DÉCORATION - Cerises avec feuilles -->
-            <circle cx="270" cy="245" r="12" fill="#DC143C" stroke="#8B0000" stroke-width="1"/>
-            <path d="M 270 230 Q 265 220 260 215" stroke="#228B22" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <ellipse cx="263" cy="217" rx="5" ry="3" fill="#228B22" transform="rotate(-30 263 217)"/>
-
-            <circle cx="330" cy="245" r="12" fill="#FF1493" stroke="#8B008B" stroke-width="1"/>
-            <path d="M 330 230 Q 335 220 340 215" stroke="#228B22" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <ellipse cx="337" cy="217" rx="5" ry="3" fill="#228B22" transform="rotate(30 337 217)"/>
-
-            <circle cx="300" cy="230" r="13" fill="#DC143C" stroke="#8B0000" stroke-width="1"/>
-            <path d="M 300 215 Q 305 205 310 200" stroke="#228B22" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <ellipse cx="308" cy="200" rx="5" ry="3" fill="#228B22" transform="rotate(20 308 200)"/>
-
-            <!-- BOUGIES AVEC FLAMMES ANIMÉES ET PAILLETTES -->
+        <!-- Gâteau simple avec 3 étages -->
+        <svg class="cake-svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <!-- ÉTAGE 1 (BASE - LE PLUS GRAND) -->
+            <!-- Gâteau marron -->
+            <rect x="50" y="300" width="300" height="100" fill="#8B6F47" rx="5"/>
             
-            <!-- Bougie 1 (gauche) -->
+            <!-- Glaçage rose sur le gâteau marron -->
+            <path d="M 50 300 Q 70 275 90 300 Q 110 275 130 300 Q 150 275 170 300 Q 190 275 210 300 Q 230 275 250 300 Q 270 275 290 300 Q 310 275 330 300 Q 350 275 370 300 L 350 320 Q 330 310 310 320 Q 290 310 270 320 Q 250 310 230 320 Q 210 310 190 320 Q 170 310 150 320 Q 130 310 110 320 Q 90 310 70 320 Q 50 310 50 300 Z" fill="#D97CAF" stroke="#C85A9A" stroke-width="1.5"/>
+
+            <!-- ÉTAGE 2 (MOYEN) -->
+            <!-- Gâteau marron -->
+            <rect x="100" y="200" width="200" height="100" fill="#8B6F47" rx="5"/>
+            
+            <!-- Glaçage rose sur le gâteau -->
+            <path d="M 100 200 Q 120 175 140 200 Q 160 175 180 200 Q 200 175 220 200 Q 240 175 260 200 Q 280 175 300 200 L 280 220 Q 260 210 240 220 Q 220 210 200 220 Q 180 210 160 220 Q 140 210 120 220 Q 100 210 100 200 Z" fill="#D97CAF" stroke="#C85A9A" stroke-width="1.5"/>
+
+            <!-- ÉTAGE 3 (SOMMET - LE PLUS PETIT) -->
+            <!-- Gâteau marron -->
+            <rect x="125" y="100" width="150" height="100" fill="#8B6F47" rx="5"/>
+            
+            <!-- Glaçage rose sur le gâteau -->
+            <path d="M 125 100 Q 140 80 155 100 Q 170 80 185 100 Q 200 80 215 100 Q 230 80 245 100 Q 260 80 275 100 L 260 120 Q 245 110 230 120 Q 215 110 200 120 Q 185 110 170 120 Q 155 110 140 120 Q 125 110 125 100 Z" fill="#D97CAF" stroke="#C85A9A" stroke-width="1.5"/>
+
+            <!-- BOUGIE (au sommet) -->
+            <!-- Bâton de bougie -->
+            <rect x="195" y="50" width="10" height="50" fill="#FDD835" stroke="#F57C00" stroke-width="1"/>
+            
+            <!-- Flamme animée -->
+            <g class="flame">
+                <!-- Couche extérieure orange vif -->
+                <path d="M 200 50 Q 190 35 200 20 Q 210 35 200 50" fill="#FF6F00" opacity="0.9" class="flame-outer"/>
+                <!-- Couche rouge intérieure -->
+                <path d="M 200 45 Q 195 35 200 25 Q 205 35 200 45" fill="#FF3D00" opacity="0.85" class="flame-middle"/>
+                <!-- Couche jaune centrale -->
+                <path d="M 200 40 Q 198 33 200 28 Q 202 33 200 40" fill="#FFEB3B" opacity="0.7" class="flame-inner"/>
+                <!-- Cœur lumineux blanc -->
+                <path d="M 200 38 Q 199 33 200 30 Q 201 33 200 38" fill="#FFFFCC" opacity="0.6" class="flame-core"/>
+                <!-- Lueur centrale -->
+                <circle cx="200" cy="35" r="6" fill="#FFD600" opacity="0.5" filter="url(#glow)" class="flame-glow"/>
+                <!-- Reflet supplémentaire -->
+                <circle cx="200" cy="33" r="3" fill="#FFFFFF" opacity="0.4" filter="url(#glow)" class="flame-highlight"/>
+            </g>
+
+            <!-- Filtre de lueur pour la flamme -->
             <defs>
                 <filter id="glow">
-                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
                     <feMerge>
                         <feMergeNode in="coloredBlur"/>
                         <feMergeNode in="SourceGraphic"/>
                     </feMerge>
                 </filter>
             </defs>
-
-            <rect x="270" y="175" width="12" height="75" fill="#F5DEB3" stroke="#DAA520" stroke-width="1.5" rx="3"/>
-            <circle cx="276" cy="172" r="6" fill="#DAA520"/>
-            <g class="flame" filter="url(#glow)">
-                <path d="M 276 165 Q 270 145 276 120 Q 282 145 276 165" fill="#FF4500" opacity="0.9"/>
-                <path d="M 276 165 Q 273 150 276 130 Q 279 150 276 165" fill="#FF6347" opacity="0.95"/>
-                <path d="M 276 155 Q 274 145 276 135 Q 278 145 276 155" fill="#FFD700" opacity="0.8"/>
-                <path d="M 276 150 Q 275 143 276 138 Q 277 143 276 150" fill="#FFFF00" opacity="0.7"/>
-            </g>
-
-            <!-- Bougie 2 (centre) -->
-            <rect x="294" y="165" width="12" height="85" fill="#F5DEB3" stroke="#DAA520" stroke-width="1.5" rx="3"/>
-            <circle cx="300" cy="162" r="6" fill="#DAA520"/>
-            <g class="flame" filter="url(#glow)">
-                <path d="M 300 155 Q 294 130 300 100 Q 306 130 300 155" fill="#FF4500" opacity="0.9"/>
-                <path d="M 300 155 Q 297 135 300 110 Q 303 135 300 155" fill="#FF6347" opacity="0.95"/>
-                <path d="M 300 145 Q 298 130 300 115 Q 302 130 300 145" fill="#FFD700" opacity="0.8"/>
-                <path d="M 300 140 Q 299 128 300 118 Q 301 128 300 140" fill="#FFFF00" opacity="0.7"/>
-            </g>
-
-            <!-- Bougie 3 (droite) -->
-            <rect x="318" y="175" width="12" height="75" fill="#F5DEB3" stroke="#DAA520" stroke-width="1.5" rx="3"/>
-            <circle cx="324" cy="172" r="6" fill="#DAA520"/>
-            <g class="flame" filter="url(#glow)">
-                <path d="M 324 165 Q 318 145 324 120 Q 330 145 324 165" fill="#FF4500" opacity="0.9"/>
-                <path d="M 324 165 Q 321 150 324 130 Q 327 150 324 165" fill="#FF6347" opacity="0.95"/>
-                <path d="M 324 155 Q 322 145 324 135 Q 326 145 324 155" fill="#FFD700" opacity="0.8"/>
-                <path d="M 324 150 Q 323 143 324 138 Q 325 143 324 150" fill="#FFFF00" opacity="0.7"/>
-            </g>
-
-            <!-- Étoiles décoratives autour des bougies -->
-            <path d="M 300 190 L 303 198 L 311 199 L 305 204 L 307 212 L 300 208 L 293 212 L 295 204 L 289 199 L 297 198 Z" fill="#FFD700" opacity="0.8"/>
         </svg>
 
+        <button class="btn-blow" id="blowBtn" onclick="blowCandle()">🌬️ Soufflez la bougie</button>
         <button class="btn-back" onclick="goBack()">← Retour</button>
     </div>
 
     <script>
+        let isCandleBlown = false;
+
         function goBack() {
             window.location.href = 'index.html';
+        }
+
+        function blowCandle() {
+            if (isCandleBlown) {
+                // Relighter la bougie
+                relightCandle();
+                return;
+            }
+
+            const blowBtn = document.getElementById('blowBtn');
+            const flameElements = document.querySelectorAll('.flame');
+            
+            // Ajouter la classe d'extinction à tous les éléments de flamme
+            flameElements.forEach(flame => {
+                flame.classList.add('extinguished');
+            });
+
+            // Créer des confettis
+            createBlowConfetti();
+
+            // Marquer la bougie comme éteinte
+            isCandleBlown = true;
+            blowBtn.textContent = '🕯️ Rallumer la bougie';
+            blowBtn.style.background = 'linear-gradient(135deg, #9E9E9E, #757575)';
+        }
+
+        function relightCandle() {
+            const blowBtn = document.getElementById('blowBtn');
+            const flameElements = document.querySelectorAll('.flame');
+            
+            // Retirer la classe d'extinction
+            flameElements.forEach(flame => {
+                flame.classList.remove('extinguished');
+            });
+
+            // Relancer l'animation de scintillement
+            flameElements.forEach(flame => {
+                flame.style.animation = 'none';
+                setTimeout(() => {
+                    flame.style.animation = 'flameFlicker 0.8s ease-in-out infinite';
+                }, 10);
+            });
+
+            // Réinitialiser le bouton
+            isCandleBlown = false;
+            blowBtn.textContent = '🌬️ Soufflez la bougie';
+            blowBtn.style.background = '';
+        }
+
+        function createBlowConfetti() {
+            const colors = ['#ff6b9d', '#c44569', '#ffa500', '#ff69b4', '#ff1493'];
+            
+            // Position de la bougie (aproximativement au centre)
+            const candleX = window.innerWidth / 2;
+            const candleY = window.innerHeight / 3;
+
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-blow';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = candleX + 'px';
+                confetti.style.top = candleY + 'px';
+                
+                // Mouvement aléatoire
+                const angle = (i / 30) * Math.PI * 2;
+                const distance = Math.random() * 150 + 100;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance - 300;
+                
+                confetti.style.setProperty('--tx', tx + 'px');
+                confetti.style.setProperty('--ty', ty + 'px');
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
         }
     </script>
 </body>

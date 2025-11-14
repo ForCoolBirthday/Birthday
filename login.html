@@ -14,11 +14,60 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            background-attachment: fixed;
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease-in-out infinite;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background elements */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        body::before {
+            top: -100px;
+            left: -100px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        body::after {
+            bottom: -150px;
+            right: -100px;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+            }
+            33% {
+                transform: translateY(-30px) translateX(30px);
+            }
+            66% {
+                transform: translateY(30px) translateX(-30px);
+            }
         }
 
         .login-container {
@@ -28,17 +77,19 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             width: 100%;
             max-width: 400px;
-            animation: slideIn 0.6s ease-out;
+            animation: slideInScale 0.6s ease-out;
+            position: relative;
+            z-index: 1;
         }
 
-        @keyframes slideIn {
+        @keyframes slideInScale {
             from {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-30px) scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
@@ -51,12 +102,26 @@
             font-size: 4rem;
             margin-bottom: 15px;
             display: block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
         }
 
         .login-header h1 {
             color: #ff6b9d;
             font-size: 2rem;
             margin-bottom: 10px;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .login-header p {
@@ -90,6 +155,7 @@
             outline: none;
             border-color: #ff6b9d;
             box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+            background: linear-gradient(to right, white, rgba(255, 107, 157, 0.05));
         }
 
         .login-btn {
@@ -105,11 +171,28 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
         }
 
         .login-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(255, 107, 157, 0.4);
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
         }
 
         .login-btn:active {
@@ -139,13 +222,25 @@
         }
 
         .info-box {
-            background: #e8f4f8;
+            background: linear-gradient(135deg, #e8f4f8, #f0e6ff);
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 25px;
             border-left: 4px solid #3498db;
             font-size: 0.85rem;
             color: #2c3e50;
+            animation: slideInLeft 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .info-box strong {
@@ -166,6 +261,7 @@
             cursor: pointer;
             width: 18px;
             height: 18px;
+            accent-color: #ff6b9d;
         }
 
         .show-password label {
@@ -173,6 +269,11 @@
             font-weight: normal;
             cursor: pointer;
             color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .show-password label:hover {
+            color: #ff6b9d;
         }
 
         @media (max-width: 480px) {

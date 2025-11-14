@@ -11,6 +11,12 @@
     --light-bg: #fff5f7;
     --dark-text: #333;
     --light-text: #666;
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-smooth: 0.5s ease;
+    --shadow-sm: 0 4px 10px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
 html {
@@ -20,6 +26,9 @@ html {
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, var(--light-bg) 0%, #ffe5ec 100%);
+    background-attachment: fixed;
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease-in-out infinite;
     color: var(--dark-text);
     line-height: 1.6;
     min-height: 100vh;
@@ -53,6 +62,15 @@ body {
     }
 }
 
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
 /* Header */
 .header {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
@@ -77,13 +95,14 @@ body {
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: bold;
-    transition: all 0.3s ease;
+    transition: all var(--transition-normal);
     backdrop-filter: blur(10px);
 }
 
 .logout-btn:hover {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .logout-btn:active {
@@ -183,7 +202,8 @@ section h2::after {
     background: white;
     padding: 50px;
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-lg);
+    animation: fadeInUp 0.8s ease-out;
 }
 
 .messages-container {
@@ -197,24 +217,46 @@ section h2::after {
     padding: 30px;
     border-radius: 15px;
     border-left: 5px solid var(--primary-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.message-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.05), transparent);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
 }
 
 .message-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(255, 107, 157, 0.2);
+    box-shadow: var(--shadow-lg);
+}
+
+.message-card:hover::before {
+    opacity: 1;
 }
 
 .message-card h3 {
     color: var(--primary-color);
     margin-bottom: 15px;
     font-size: 1.3rem;
+    position: relative;
+    z-index: 1;
 }
 
 .message-card p {
     color: var(--dark-text);
     margin-bottom: 15px;
     line-height: 1.8;
+    position: relative;
+    z-index: 1;
 }
 
 .message-author {
@@ -222,6 +264,8 @@ section h2::after {
     color: var(--light-text);
     font-style: italic;
     font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
 }
 
 /* Event Section */
@@ -229,7 +273,8 @@ section h2::after {
     background: white;
     padding: 50px;
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-lg);
+    animation: fadeInUp 0.8s ease-out 0.1s both;
 }
 
 .event-details {
@@ -245,11 +290,14 @@ section h2::after {
     padding: 20px;
     background: linear-gradient(135deg, #ffe5ec, #fff5f7);
     border-radius: 15px;
-    transition: transform 0.3s ease;
+    transition: all var(--transition-normal);
+    cursor: pointer;
 }
 
 .detail-item:hover {
     transform: translateX(10px);
+    box-shadow: var(--shadow-md);
+    background: linear-gradient(135deg, #ffc0d9, #ffe5ec);
 }
 
 .detail-item .icon {
@@ -272,8 +320,9 @@ section h2::after {
     background: white;
     padding: 50px;
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-lg);
     text-align: center;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
 .cake-intro {
@@ -291,15 +340,32 @@ section h2::after {
     text-decoration: none;
     font-weight: bold;
     font-size: 1.1rem;
-    transition: all 0.3s ease;
+    transition: all var(--transition-normal);
     box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cake-link-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left var(--transition-normal);
 }
 
 .cake-link-btn:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 30px rgba(255, 107, 157, 0.4);
+}
+
+.cake-link-btn:hover::before {
+    left: 100%;
 }
 
 .cake-link-btn:active {
@@ -313,12 +379,28 @@ section h2::after {
     padding: 60px 20px;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-lg);
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1), transparent);
+    pointer-events: none;
 }
 
 .cta-section h2 {
     color: white;
     margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
 }
 
 .cta-section h2::after {
@@ -334,15 +416,18 @@ section h2::after {
     font-weight: bold;
     border-radius: 50px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-normal);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     text-transform: uppercase;
     letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
 }
 
 .cta-button:hover {
     transform: scale(1.05);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 245, 250, 0.95));
 }
 
 .cta-button:active {
@@ -473,6 +558,18 @@ section h2::after {
     }
 }
 
+/* Animation fadeInUp pour les sections */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Animation des ballons flottants */
 @keyframes floatUp {
     0% {
@@ -524,5 +621,78 @@ section h2::after {
     }
     100% {
         transform: scale(1);
+    }
+}
+
+/* Animation de vague de gradient */
+@keyframes gradientWave {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Animation de bounce */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-30px);
+    }
+}
+
+/* Animation de flottaison vers le haut */
+@keyframes float-up {
+    0% {
+        bottom: -100px;
+        opacity: 1;
+        transform: translateX(0) rotate(0deg);
+    }
+    50% {
+        transform: translateX(100px) rotate(180deg);
+    }
+    100% {
+        bottom: 110vh;
+        opacity: 0;
+        transform: translateX(-100px) rotate(360deg);
+    }
+}
+
+/* Animation de pop du ballon */
+@keyframes pop-balloon {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* Animation des étincelles */
+@keyframes spark-burst {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx, 0), var(--ty, 0)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Animation slide in big */
+@keyframes slideInBig {
+    from {
+        opacity: 0;
+        transform: scale(0.5) translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
     }
 }

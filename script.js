@@ -9,15 +9,18 @@ const eventDetails = {
 // ===== DÉCONNEXION =====
 document.getElementById('logout-btn').addEventListener('click', function() {
     if (confirm('Êtes-vous sûr de vouloir vous déconnecter ? 🚪')) {
-        sessionStorage.removeItem('authenticated');
-        window.location.href = 'login.html';
+        // Animation de fade out
+        document.body.style.animation = 'fadeOut 0.5s ease-out forwards';
+        setTimeout(() => {
+            sessionStorage.removeItem('authenticated');
+            window.location.href = 'login.html';
+        }, 500);
     }
 });
 
 // ===== Mise à jour des détails de l'événement =====
 function updateEventDetails() {
     document.getElementById('event-date').textContent = eventDetails.date;
-    document.getElementById('event-time').textContent = eventDetails.time;
     document.getElementById('event-location').textContent = eventDetails.location;
 }
 
@@ -48,46 +51,213 @@ function createConfetti() {
     }
 }
 
-// ===== Bouton RSVP =====
-document.getElementById('rsvp-button').addEventListener('click', function() {
-    // Animation spectaculaire
-    triggerRSVPAnimation();
-    
-    // Après 2 secondes, afficher le message
-    setTimeout(() => {
-        alert('Merci de votre intérêt ! 🎉\n\nVous pouvez répondre par email ou utiliser un formulaire personnalisé.');
-    }, 2000);
+// ===== Bouton de Célébration Personnalisée =====
+document.getElementById('celebration-button').addEventListener('click', function() {
+    showCelebrationAnimation();
 });
 
-// Animation spectaculaire pour RSVP
-function triggerRSVPAnimation() {
-    const rsvpButton = document.getElementById('rsvp-button');
+// Animation spectaculaire de célébration plein écran
+function showCelebrationAnimation() {
+    // Créer le container de célébration
+    const celebrationContainer = document.createElement('div');
+    celebrationContainer.id = 'celebration-overlay';
+    celebrationContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #ff6b9d 100%);
+        background-size: 200% 200%;
+        animation: gradientWave 4s ease infinite;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        overflow: hidden;
+    `;
+
+    // Ajouter le contenu de célébration
+    celebrationContainer.innerHTML = `
+        <div style="text-align: center; position: relative; z-index: 100; animation: slideInBig 0.8s ease-out;">
+            <div style="font-size: 5rem; margin-bottom: 30px; animation: bounce 2s ease-in-out infinite;">🎂</div>
+            <h1 style="font-size: 4rem; color: white; margin: 0; text-shadow: 4px 4px 8px rgba(0,0,0,0.3); animation: slideDown 0.8s ease-out;">JOYEUX ANNIVERSAIRE</h1>
+            <h2 style="font-size: 3.5rem; color: white; margin: 20px 0 0 0; text-shadow: 3px 3px 6px rgba(0,0,0,0.3); animation: slideUp 0.8s ease-out 0.2s both;">YOHANN ! �</h2>
+            <p style="font-size: 1.5rem; color: rgba(255,255,255,0.95); margin-top: 40px; max-width: 600px; line-height: 2; animation: fadeIn 1s ease-out 0.5s both;">
+                Que cette journée soit remplie de sourires, de rires et de moments inoubliables ! 💝<br>
+                Tu mérites d'être célébré comme la personne incroyable que tu es ! ✨
+            </p>
+            <div style="margin-top: 50px; animation: pulse 2s ease-in-out infinite;">
+                <span style="font-size: 2.5rem; margin: 0 15px; display: inline-block;">🎊</span>
+                <span style="font-size: 2.5rem; margin: 0 15px; display: inline-block;">🎈</span>
+                <span style="font-size: 2.5rem; margin: 0 15px; display: inline-block;">🎆</span>
+            </div>
+        </div>
+        <button id="close-celebration" style="
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 40px;
+            background: white;
+            color: #ff6b9d;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            z-index: 101;
+            animation: slideUp 0.8s ease-out 0.6s both;
+        ">✨ Fermer la surprise ✨</button>
+    `;
+
+    document.body.appendChild(celebrationContainer);
+
+    // Créer des animations de confettis et ballons intensives
+    createIntensiveConfetti(celebrationContainer);
+    createFloatingBalloons(celebrationContainer);
+    createFireworks(celebrationContainer);
+
+    // Gestionnaire pour fermer l'animation
+    document.getElementById('close-celebration').addEventListener('click', function() {
+        celebrationContainer.style.animation = 'fadeOut 0.6s ease-out forwards';
+        setTimeout(() => celebrationContainer.remove(), 600);
+    });
+
+    // Fermer avec Échap
+    const closeOnEscape = (e) => {
+        if (e.key === 'Escape') {
+            document.removeEventListener('keydown', closeOnEscape);
+            celebrationContainer.style.animation = 'fadeOut 0.6s ease-out forwards';
+            setTimeout(() => celebrationContainer.remove(), 600);
+        }
+    };
+    document.addEventListener('keydown', closeOnEscape);
+}
+
+// Créer des confettis intensifs plein écran
+function createIntensiveConfetti(container) {
+    const colors = ['#ff6b9d', '#c44569', '#ffa500', '#ff69b4', '#ff1493', '#ffeb3b', '#4cd964'];
     
-    // Ajouter une classe d'animation au bouton
-    rsvpButton.style.transform = 'scale(1.1)';
-    rsvpButton.style.background = 'linear-gradient(135deg, #FFD700, #FFA500)';
-    
-    // Créer des explosions de confettis
-    for (let i = 0; i < 8; i++) {
-        setTimeout(() => {
-            createConfetti();
-        }, i * 150);
+    for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.cssText = `
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            left: ${Math.random() * 100}%;
+            top: -10px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99;
+            animation: confetti-fall 4s ease-in forwards;
+            animation-delay: ${Math.random() * 1}s;
+        `;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
     }
+}
+
+// Créer des ballons flottants
+function createFloatingBalloons(container) {
+    const balloonEmojis = ['🎈', '🎊', '🎉', '✨', '⭐', '💝', '🎀'];
     
-    // Créer des ballons flottants
-    createBalloons();
-    
-    // Animation de pulse du bouton
-    rsvpButton.style.animation = 'none';
-    setTimeout(() => {
-        rsvpButton.style.animation = 'buttonPulse 0.6s ease-out';
-    }, 10);
-    
-    // Revenir à l'état normal après l'animation
-    setTimeout(() => {
-        rsvpButton.style.transform = 'scale(1)';
-        rsvpButton.style.background = '';
-    }, 2000);
+    for (let i = 0; i < 20; i++) {
+        const balloon = document.createElement('div');
+        balloon.style.cssText = `
+            position: fixed;
+            font-size: ${Math.random() * 40 + 50}px;
+            left: ${Math.random() * 100}%;
+            bottom: -100px;
+            z-index: 99;
+            cursor: pointer;
+            animation: float-up ${Math.random() * 3 + 5}s ease-in-out forwards;
+            animation-delay: ${Math.random() * 2}s;
+            pointer-events: auto;
+        `;
+        balloon.textContent = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+        document.body.appendChild(balloon);
+        
+        balloon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            balloon.style.animation = 'pop-balloon 0.4s ease-out forwards';
+            createSmallExplosion(parseFloat(balloon.style.left), parseFloat(balloon.style.bottom));
+            setTimeout(() => balloon.remove(), 400);
+        });
+        
+        setTimeout(() => balloon.remove(), 9000);
+    }
+}
+
+// Créer des feux d'artifice
+function createFireworks(container) {
+    setInterval(() => {
+        const x = Math.random() * 100;
+        const y = Math.random() * 50 + 20;
+        
+        for (let i = 0; i < 15; i++) {
+            const spark = document.createElement('div');
+            const colors = ['#ffeb3b', '#ff6b9d', '#c44569', '#ffa500'];
+            spark.style.cssText = `
+                position: fixed;
+                width: 6px;
+                height: 6px;
+                background: ${colors[Math.floor(Math.random() * colors.length)]};
+                left: ${x}%;
+                top: ${y}%;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 99;
+            `;
+            document.body.appendChild(spark);
+            
+            const angle = (i / 15) * Math.PI * 2;
+            const velocity = 4;
+            const tx = Math.cos(angle) * velocity * 40;
+            const ty = Math.sin(angle) * velocity * 40;
+            
+            spark.style.animation = `spark-burst 1.5s ease-out forwards`;
+            spark.style.setProperty('--tx', tx + 'px');
+            spark.style.setProperty('--ty', ty + 'px');
+            
+            setTimeout(() => spark.remove(), 1500);
+        }
+    }, 800);
+}
+
+// Créer une petite explosion au clic
+function createSmallExplosion(x, y) {
+    const colors = ['#ff6b9d', '#c44569', '#ffa500', '#ff69b4'];
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            left: ${x}%;
+            top: ${y}%;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99;
+        `;
+        document.body.appendChild(particle);
+        
+        const angle = (i / 20) * Math.PI * 2;
+        const velocity = 5;
+        const tx = Math.cos(angle) * velocity * 50;
+        const ty = Math.sin(angle) * velocity * 50;
+        
+        particle.style.animation = `spark-burst 1s ease-out forwards`;
+        particle.style.setProperty('--tx', tx + 'px');
+        particle.style.setProperty('--ty', ty + 'px');
+        
+        setTimeout(() => particle.remove(), 1000);
+    }
 }
 
 // Créer des ballons flottants
@@ -237,8 +407,7 @@ const observerOptions = {
 const observer = new IntersectionObserver(function(entries) {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.classList.add('in-view');
             observer.unobserve(entry.target);
         }
     });
@@ -246,11 +415,49 @@ const observer = new IntersectionObserver(function(entries) {
 
 // Observer toutes les sections
 document.querySelectorAll('section').forEach(section => {
-    section.style.opacity = '0';
-    section.style.transform = 'translateY(30px)';
-    section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(section);
 });
+
+// Ajouter des styles pour in-view
+const style = document.createElement('style');
+style.textContent = `
+    section {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    
+    section.in-view {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+    }
+    
+    .message-card {
+        animation: slideInCard 0.6s ease-out both;
+    }
+    
+    @keyframes slideInCard {
+        from {
+            opacity: 0;
+            transform: translateY(20px) rotateX(10deg);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+    }
+`;
+document.head.appendChild(style);
 
 // ===== Initialisation =====
 document.addEventListener('DOMContentLoaded', function() {
