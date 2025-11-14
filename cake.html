@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gâteau d'Anniversaire 🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Particules étoiles en arrière-plan */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .cake-container {
+            position: relative;
+            text-align: center;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .cake-title {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .cake-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Gâteau SVG */
+        .cake-svg {
+            max-width: 700px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.4));
+            transition: transform 0.3s ease;
+        }
+
+        .cake-svg:hover {
+            transform: scale(1.02);
+        }
+
+        /* Animation des flammes */
+        .flame {
+            animation: flameFlicker 0.8s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        @keyframes flameFlicker {
+            0% {
+                opacity: 0.8;
+                transform: scaleY(0.9);
+            }
+            25% {
+                opacity: 1;
+                transform: scaleY(1.15);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scaleY(0.85);
+            }
+            75% {
+                opacity: 1;
+                transform: scaleY(1.1);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scaleY(0.9);
+            }
+        }
+
+        .btn-back {
+            margin-top: 40px;
+            padding: 14px 35px;
+            font-size: 1rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.08);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .cake-title {
+                font-size: 2.5rem;
+            }
+
+            .cake-subtitle {
+                font-size: 1rem;
+            }
+
+            .cake-svg {
+                max-width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cake-container">
+        <h1 class="cake-title">🎂 Joyeux Anniversaire ! 🎂</h1>
+        <p class="cake-subtitle">✨ Un gâteau délicieux pour une journée inoubliable ✨</p>
+
+        <!-- Gâteau simple avec bougies animées -->
+        <svg class="cake-svg" viewBox="0 0 600 650" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- Gradient pour le glaçage -->
+                <linearGradient id="glazeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#FF85C1;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#FF1493;stop-opacity:1" />
+                </linearGradient>
+                <!-- Gradient pour le gâteau -->
+                <linearGradient id="cakeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#A0522D;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#654321;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+
+            <!-- Assiette avec ombre -->
+            <ellipse cx="300" cy="590" rx="220" ry="60" fill="#E8D700" stroke="#C4AF00" stroke-width="2"/>
+            <ellipse cx="300" cy="585" rx="210" ry="55" fill="#FFE93B" stroke="none"/>
+            <!-- Reflet sur l'assiette -->
+            <ellipse cx="300" cy="570" rx="200" ry="20" fill="#FFFACD" opacity="0.6"/>
+
+            <!-- PREMIER ÉTAGE (BASE) -->
+            <ellipse cx="300" cy="510" rx="160" ry="45" fill="url(#cakeGradient)" stroke="#3D2817" stroke-width="3"/>
+            <polygon points="140,510 140,450 460,450 460,510" fill="#8B5A3C" stroke="#3D2817" stroke-width="2"/>
+            <ellipse cx="300" cy="450" rx="160" ry="15" fill="#A0522D" stroke="#3D2817" stroke-width="2"/>
+
+            <!-- Glaçage premier étage avec texture -->
+            <path d="M 140 450 Q 160 420 180 450 Q 200 420 220 450 Q 240 420 260 450 Q 280 420 300 450 Q 320 420 340 450 Q 360 420 380 450 Q 400 420 420 450 Q 440 420 460 450" 
+                  fill="url(#glazeGradient)" stroke="#FF1493" stroke-width="2" stroke-linecap="round"/>
+
+            <!-- Gouttes de glaçage -->
+            <circle cx="150" cy="465" r="6" fill="#FF69B4" opacity="0.8"/>
+            <circle cx="220" cy="470" r="5" fill="#FF69B4" opacity="0.7"/>
+            <circle cx="310" cy="472" r="6" fill="#FF69B4" opacity="0.8"/>
+            <circle cx="400" cy="468" r="5" fill="#FF69B4" opacity="0.7"/>
+            <circle cx="470" cy="464" r="6" fill="#FF69B4" opacity="0.8"/>
+
+            <!-- DEUXIÈME ÉTAGE -->
+            <ellipse cx="300" cy="400" rx="120" ry="40" fill="url(#cakeGradient)" stroke="#3D2817" stroke-width="3"/>
+            <polygon points="180,400 180,350 420,350 420,400" fill="#8B5A3C" stroke="#3D2817" stroke-width="2"/>
+            <ellipse cx="300" cy="350" rx="120" ry="12" fill="#A0522D" stroke="#3D2817" stroke-width="2"/>
+
+            <!-- Glaçage deuxième étage -->
+            <path d="M 180 350 Q 200 325 220 350 Q 240 325 260 350 Q 280 325 300 350 Q 320 325 340 350 Q 360 325 380 350 Q 400 325 420 350" 
+                  fill="url(#glazeGradient)" stroke="#FF1493" stroke-width="2" stroke-linecap="round"/>
+
+            <!-- Gouttes de glaçage étage 2 -->
+            <circle cx="190" cy="362" r="5" fill="#FF69B4" opacity="0.7"/>
+            <circle cx="310" cy="365" r="5" fill="#FF69B4" opacity="0.8"/>
+            <circle cx="430" cy="360" r="5" fill="#FF69B4" opacity="0.7"/>
+
+            <!-- TROISIÈME ÉTAGE (SOMMET) -->
+            <ellipse cx="300" cy="310" rx="80" ry="35" fill="url(#cakeGradient)" stroke="#3D2817" stroke-width="3"/>
+            <polygon points="220,310 220,270 380,270 380,310" fill="#8B5A3C" stroke="#3D2817" stroke-width="2"/>
+            <ellipse cx="300" cy="270" rx="80" ry="10" fill="#A0522D" stroke="#3D2817" stroke-width="2"/>
+
+            <!-- Glaçage du sommet -->
+            <path d="M 220 270 Q 240 250 260 270 Q 280 250 300 270 Q 320 250 340 270 Q 360 250 380 270" 
+                  fill="url(#glazeGradient)" stroke="#FF1493" stroke-width="2" stroke-linecap="round"/>
+
+            <!-- Gouttes de glaçage sommet -->
+            <circle cx="240" cy="278" r="4" fill="#FF69B4" opacity="0.7"/>
+            <circle cx="360" cy="280" r="4" fill="#FF69B4" opacity="0.7"/>
+
+            <!-- DÉCORATION - Cerises avec feuilles -->
+            <circle cx="270" cy="245" r="12" fill="#DC143C" stroke="#8B0000" stroke-width="1"/>
+            <path d="M 270 230 Q 265 220 260 215" stroke="#228B22" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <ellipse cx="263" cy="217" rx="5" ry="3" fill="#228B22" transform="rotate(-30 263 217)"/>
+
+            <circle cx="330" cy="245" r="12" fill="#FF1493" stroke="#8B008B" stroke-width="1"/>
+            <path d="M 330 230 Q 335 220 340 215" stroke="#228B22" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <ellipse cx="337" cy="217" rx="5" ry="3" fill="#228B22" transform="rotate(30 337 217)"/>
+
+            <circle cx="300" cy="230" r="13" fill="#DC143C" stroke="#8B0000" stroke-width="1"/>
+            <path d="M 300 215 Q 305 205 310 200" stroke="#228B22" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <ellipse cx="308" cy="200" rx="5" ry="3" fill="#228B22" transform="rotate(20 308 200)"/>
+
+            <!-- BOUGIES AVEC FLAMMES ANIMÉES ET PAILLETTES -->
+            
+            <!-- Bougie 1 (gauche) -->
+            <defs>
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+
+            <rect x="270" y="175" width="12" height="75" fill="#F5DEB3" stroke="#DAA520" stroke-width="1.5" rx="3"/>
+            <circle cx="276" cy="172" r="6" fill="#DAA520"/>
+            <g class="flame" filter="url(#glow)">
+                <path d="M 276 165 Q 270 145 276 120 Q 282 145 276 165" fill="#FF4500" opacity="0.9"/>
+                <path d="M 276 165 Q 273 150 276 130 Q 279 150 276 165" fill="#FF6347" opacity="0.95"/>
+                <path d="M 276 155 Q 274 145 276 135 Q 278 145 276 155" fill="#FFD700" opacity="0.8"/>
+                <path d="M 276 150 Q 275 143 276 138 Q 277 143 276 150" fill="#FFFF00" opacity="0.7"/>
+            </g>
+
+            <!-- Bougie 2 (centre) -->
+            <rect x="294" y="165" width="12" height="85" fill="#F5DEB3" stroke="#DAA520" stroke-width="1.5" rx="3"/>
+            <circle cx="300" cy="162" r="6" fill="#DAA520"/>
+            <g class="flame" filter="url(#glow)">
+                <path d="M 300 155 Q 294 130 300 100 Q 306 130 300 155" fill="#FF4500" opacity="0.9"/>
+                <path d="M 300 155 Q 297 135 300 110 Q 303 135 300 155" fill="#FF6347" opacity="0.95"/>
+                <path d="M 300 145 Q 298 130 300 115 Q 302 130 300 145" fill="#FFD700" opacity="0.8"/>
+                <path d="M 300 140 Q 299 128 300 118 Q 301 128 300 140" fill="#FFFF00" opacity="0.7"/>
+            </g>
+
+            <!-- Bougie 3 (droite) -->
+            <rect x="318" y="175" width="12" height="75" fill="#F5DEB3" stroke="#DAA520" stroke-width="1.5" rx="3"/>
+            <circle cx="324" cy="172" r="6" fill="#DAA520"/>
+            <g class="flame" filter="url(#glow)">
+                <path d="M 324 165 Q 318 145 324 120 Q 330 145 324 165" fill="#FF4500" opacity="0.9"/>
+                <path d="M 324 165 Q 321 150 324 130 Q 327 150 324 165" fill="#FF6347" opacity="0.95"/>
+                <path d="M 324 155 Q 322 145 324 135 Q 326 145 324 155" fill="#FFD700" opacity="0.8"/>
+                <path d="M 324 150 Q 323 143 324 138 Q 325 143 324 150" fill="#FFFF00" opacity="0.7"/>
+            </g>
+
+            <!-- Étoiles décoratives autour des bougies -->
+            <path d="M 300 190 L 303 198 L 311 199 L 305 204 L 307 212 L 300 208 L 293 212 L 295 204 L 289 199 L 297 198 Z" fill="#FFD700" opacity="0.8"/>
+        </svg>
+
+        <button class="btn-back" onclick="goBack()">← Retour</button>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

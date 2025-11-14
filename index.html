@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyeux Anniversaire ! 🎉</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Fond animé avec confettis -->
+    <div id="confetti-container" class="confetti-container"></div>
+
+    <!-- Header principal -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="main-title">🎂 Joyeux Anniversaire ! 🎂</h1>
+            <p class="subtitle">Une journée spéciale pour une personne spéciale</p>
+        </div>
+        <button id="logout-btn" class="logout-btn" title="Se déconnecter">🚪 Déconnexion</button>
+    </header>
+
+    <!-- Section de la galerie photos -->
+    <section class="gallery-section">
+        <h2>Galerie de souvenirs</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                    <span>📷</span>
+                    <p>Photo 1</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                    <span>📷</span>
+                    <p>Photo 2</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                    <span>📷</span>
+                    <p>Photo 3</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                    <span>📷</span>
+                    <p>Photo 4</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                    <span>📷</span>
+                    <p>Photo 5</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">
+                    <span>📷</span>
+                    <p>Photo 6</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section des messages -->
+    <section class="messages-section">
+        <h2>Messages et vœux</h2>
+        <div class="messages-container">
+            <div class="message-card">
+                <h3>🎂 42 ans déjà ! 🎂</h3>
+                <p>À 42 ans, t'es officiellement plus proche de l'EHPAD que de l'école ! Mais bonne nouvelle, tu peux encore oublier tes rendez-vous comme un jeune. Profites-en ! �</p>
+                <span class="message-author">- Un ami réaliste</span>
+            </div>
+            <div class="message-card">
+                <h3>�️ La Retraite approche ! �️</h3>
+                <p>Dans 23 ans, tu seras enfin à la retraite ! C'est pas loin, tu sais. À ce stade de la vie, c'est juste une question de patience. Bon courage pour les 23 prochaines années ! �</p>
+                <span class="message-author">- Ton comptable</span>
+            </div>
+            <div class="message-card">
+                <h3>✨ Joyeux Anniversaire ✨</h3>
+                <p>42 ans c'est l'âge où tu commences à comprendre que tes parents avaient raison. Mais c'est aussi l'âge où tu peux faire ce que tu veux, donc profites ! Bon anniversaire ! 🎉</p>
+                <span class="message-author">- Quelqu'un qui t'aime</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section des détails de l'événement -->
+    <section class="event-section">
+        <h2>Détails de l'événement</h2>
+        <div class="event-details">
+            <div class="detail-item">
+                <span class="icon">📅</span>
+                <div>
+                    <h3>Date</h3>
+                    <p id="event-date">À modifier dans le code</p>
+                </div>
+            </div>
+            <div class="detail-item">
+                <span class="icon">🕐</span>
+                <div>
+                    <h3>Heure</h3>
+                    <p id="event-time">À modifier dans le code</p>
+                </div>
+            </div>
+            <div class="detail-item">
+                <span class="icon">📍</span>
+                <div>
+                    <h3>Lieu</h3>
+                    <p id="event-location">À modifier dans le code</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Gâteau Animé -->
+    <section class="cake-section">
+        <h2>Soufflez les bougies ! 🎂</h2>
+        <p class="cake-intro">Venez découvrir notre gâteau d'anniversaire animé !</p>
+        <a href="cake.html" class="cake-link-btn">🎂 Voir le gâteau animé</a>
+    </section>
+
+    <!-- Section CTA -->
+    <section class="cta-section">
+        <h2>Rejoignez la célébration ! 🎉</h2>
+        <button class="cta-button" id="rsvp-button">Confirmer votre présence</button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Créé avec ❤️ pour une journée spéciale</p>
+        <p class="footer-small">Publiée sur GitHub Pages</p>
+    </footer>
+
+    <script>
+        // ===== VÉRIFICATION DE L'AUTHENTIFICATION =====
+        // Si l'utilisateur n'est pas authentifié, le rediriger vers la page de connexion
+        if (sessionStorage.getItem('authenticated') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
